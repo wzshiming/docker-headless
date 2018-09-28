@@ -8,6 +8,8 @@ LABEL maintainer="wzshiming@foxmail.com"
 # Installs package.
 RUN apk add -U --no-cache \
     chromium \
+    udev \
+    dbus \
     font-noto
 
 # Install cjk and emoji.
