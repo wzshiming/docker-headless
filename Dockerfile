@@ -6,8 +6,7 @@ FROM alpine:${ALPINE_VERSION}
 LABEL maintainer="wzshiming@foxmail.com"
 
 # Installs package.
-RUN \
-    apk add -U --no-cache \
+RUN apk add -U --no-cache \
     chromium \
     font-noto
 
@@ -23,16 +22,20 @@ RUN rm -rf /var/lib/apt/lists/* \
     /usr/share/man \
     /tmp/*
 
-# Add Chrome as a user
+# Add shell.
+COPY *.sh /usr/local/bin/
+
+# Add chrome as a user.
 RUN adduser -D chrome
 
-# Run Chrome as non-privileged
+# Run chrome as non-privileged.
 USER chrome
 WORKDIR /home/chrome
 
 EXPOSE 9222
 
-# Autorun chromium browser
-ENTRYPOINT ["chromium-browser"]
+# Autorun chromium browser.
+ENTRYPOINT entrypoint.sh
 
-CMD ["--headless", "--no-sandbox", "--disable-gpu", "--window-size=1920,1080", "--remote-debugging-address=0.0.0.0", "--remote-debugging-port=9222"]
+# Healthcheck.
+HEALTHCHECK --interval=15s --timeout=3s CMD healthcheck.sh
