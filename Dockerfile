@@ -25,12 +25,7 @@ RUN rm -rf /var/lib/apt/lists/* \
 # Add shell.
 COPY *.sh /usr/local/bin/
 
-# Add chrome as a user.
-RUN adduser -D chrome
-
-# Run chrome as non-privileged.
-USER chrome
-WORKDIR /home/chrome
+WORKDIR /root/
 
 EXPOSE 9222
 
